@@ -5,6 +5,7 @@ import com.justdo.plug.post.domain.hashtag.service.HashtagService;
 import com.justdo.plug.post.domain.photo.service.PhotoService;
 import com.justdo.plug.post.domain.post.Post;
 import com.justdo.plug.post.domain.post.dto.PostRequestDto;
+import com.justdo.plug.post.domain.post.dto.PostResponseDto;
 import com.justdo.plug.post.domain.post.service.PostService;
 import com.justdo.plug.post.domain.posthashtag.service.PostHashtagService;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,10 @@ public class PostController {
 
     // BLOG002: 블로그 상세페이지 조회
     @GetMapping("{post_id}")
-    public PostRequestDto ViewPage(@PathVariable long post_id){
-        /*service*/
-        return null;
+    public PostResponseDto ViewPage(@PathVariable long post_id){
+
+        return postService.getPostById(post_id);
+
     }
 
     // BLOG003: 블로그 작성 요청
