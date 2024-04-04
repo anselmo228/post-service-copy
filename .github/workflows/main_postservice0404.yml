@@ -26,6 +26,8 @@ jobs:
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
+        with:
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
