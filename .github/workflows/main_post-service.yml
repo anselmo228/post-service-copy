@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - POST-SERVICE
+name: Build and deploy JAR app to Azure Web App - postservice0404
 
 on:
   push:
@@ -21,14 +21,16 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+        with:
+          arguments: clean build
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: 'build/libs/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -36,27 +38,19 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-  
+
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: java-app
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2F123879E0F341E1962B4CB0895E82A9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2C78112CA02944A698EB83E3FDD69F04 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7373722BC6974BAE97A42747F52AEA0B }}
+          path: 'build/libs/'
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'POST-SERVICE'
+          app-name: 'postservice0404'
           slot-name: 'Production'
-          package: '*.jar'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8FA589AF8679434986FA5D5B2065501C }}
+          package: '/home/runner/work/post-service-copy/post-service-copy/build/libs/blog-0.0.1-SNAPSHOT.jar'
