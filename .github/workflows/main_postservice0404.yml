@@ -50,4 +50,4 @@ jobs:
           app-name: 'postservice0404'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8FA589AF8679434986FA5D5B2065501C }}
-          package: '*.jar'
+          package: 'blog-0.0.1-SNAPSHOT.jar'
