@@ -42,6 +42,9 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
+        with:
+          name: java-app
+          path: 'build/libs/'
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -50,4 +53,4 @@ jobs:
           app-name: 'postservice0404'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8FA589AF8679434986FA5D5B2065501C }}
-          package: 'java-app.jar'
+          package: '*.jar'
