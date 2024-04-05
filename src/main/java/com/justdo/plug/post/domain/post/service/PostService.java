@@ -6,6 +6,9 @@ import com.justdo.plug.post.domain.post.dto.PostResponseDto;
 import com.justdo.plug.post.domain.post.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +26,16 @@ public class PostService {
 
     public PostResponseDto getPostById(long post_id) {
         Post post = postRepository.findById(post_id)
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + post_id));
+                .orElseThrow(() -> new RuntimeException("해당 id의 게시글을 찾을 수 없습니다: " + post_id));
+
+         /*
+        String JsonContent = post.getContent();
+
+        JSONObject jsonObject = new JSONObject(JsonContent);
+
+        System.out.println(jsonObject);
+
+        */
 
         return PostResponseDto.builder()
                 .post_id(post.getId())
@@ -37,5 +49,6 @@ public class PostService {
                 .member_id(post.getMember_id())
                 .blog_id(post.getBlog_id())
                 .build();
+
     }
 }

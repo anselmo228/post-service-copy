@@ -1,5 +1,6 @@
 package com.justdo.plug.post.domain.post.dto;
 import lombok.*;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
@@ -16,4 +17,5 @@ public class PostResponseDto {
     private LocalDateTime updatedAt;
     private long member_id;
     private long blog_id;
+
 }

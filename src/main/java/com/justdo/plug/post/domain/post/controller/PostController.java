@@ -9,6 +9,7 @@ import com.justdo.plug.post.domain.post.dto.PostResponseDto;
 import com.justdo.plug.post.domain.post.service.PostService;
 import com.justdo.plug.post.domain.posthashtag.service.PostHashtagService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/blog/posts/")
 @RequiredArgsConstructor
+
 /*BLOG API - POSTS*/
 public class PostController {
 
