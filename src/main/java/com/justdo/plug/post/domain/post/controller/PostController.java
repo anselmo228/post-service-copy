@@ -9,7 +9,6 @@ import com.justdo.plug.post.domain.post.dto.PostResponseDto;
 import com.justdo.plug.post.domain.post.service.PostService;
 import com.justdo.plug.post.domain.posthashtag.service.PostHashtagService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -31,9 +30,10 @@ public class PostController {
     // BLOG001: 블로그 리스트 조회
     /* TODO: 서비스 함수 추가 및 return 해주기 */
     @GetMapping()
-    public List<PostRequestDto> ViewList(){
-        /*service*/
-        return null;
+    public List<Post> ViewList(){
+
+        return postService.getAllPosts();
+
     }
 
     // BLOG002: 블로그 상세페이지 조회
@@ -67,7 +67,7 @@ public class PostController {
             String photo_url = RequestDto.getPhoto_url();
             photoService.createPhoto(photo_url, post_id);
 
-            return "게시글이 성공적으로 업로드 되었습니다";
+            return "게시글이 성공적으로 업로드 되었습니다 (post_id: " + post_id + ")";
     }
 
     // BLOG004: 블로그 수정 요청
@@ -79,9 +79,10 @@ public class PostController {
 
     // BLOG005: 블로그 삭제 요청
     @DeleteMapping("{post_id}")
-    public PostRequestDto DeleteBlog(@PathVariable long post_id){
-        /*service*/
-        return null;
+    public String DeleteBlog(@PathVariable long post_id){
+
+        return postService.delete(post_id);
+
     }
 
 }

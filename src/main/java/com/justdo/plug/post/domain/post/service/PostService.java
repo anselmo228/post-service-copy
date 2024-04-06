@@ -6,8 +6,6 @@ import com.justdo.plug.post.domain.post.dto.PostResponseDto;
 import com.justdo.plug.post.domain.post.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +21,21 @@ public class PostService {
     private final PostRepository postRepository;
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
-    // 블로그 작성
+    // BLOG003: 블로그 작성
     public Post save(PostRequestDto requestDto) {
        
             Post post = requestDto.toEntity();
             return postRepository.save(post);
     }
 
+    // BLOG001: 블로그 리스트 조회
+    public List<Post> getAllPosts() {
+
+        return postRepository.findAll();
+
+    }
+
+    // BLOG002: 블로그 상세 페이지 조회
     public PostResponseDto getPostById(long post_id) {
         Post post = postRepository.findById(post_id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글을 찾을 수 없습니다: " + post_id));
@@ -64,6 +70,19 @@ public class PostService {
 
         return responseDto;
     }
+
+    // BLOG005: 블로그 삭제
+    public String delete(long post_id){
+        Post post = postRepository.findById(post_id)
+                .orElseThrow(() -> new RuntimeException("해당 id의 게시글을 찾을 수 없습니다: " + post_id));
+        postRepository.delete(post);
+
+        return "게시글이 성공적으로 삭제되었습니다";
+    }
+
+    // 블로그 수정
+
+
 
 
 }
