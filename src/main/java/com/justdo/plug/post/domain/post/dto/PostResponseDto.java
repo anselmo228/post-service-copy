@@ -1,5 +1,6 @@
 package com.justdo.plug.post.domain.post.dto;
 import lombok.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 public class PostResponseDto {
     private Long post_id;
     private String title;
-    private String content;
+    private Object[] content;
     private int like_count;
     private boolean temporary_state;
     private boolean state;

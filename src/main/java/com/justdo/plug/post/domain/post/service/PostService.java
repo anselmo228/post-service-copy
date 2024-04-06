@@ -9,13 +9,19 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     // 블로그 작성
     public Post save(PostRequestDto requestDto) {
@@ -28,19 +34,21 @@ public class PostService {
         Post post = postRepository.findById(post_id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글을 찾을 수 없습니다: " + post_id));
 
-         /*
+
+
         String JsonContent = post.getContent();
 
-        JSONObject jsonObject = new JSONObject(JsonContent);
+        JSONArray jsonArray = new JSONArray(JsonContent);
 
-        System.out.println(jsonObject);
+        List<Object> list = jsonArray.toList();
 
-        */
 
-        return PostResponseDto.builder()
+        Object[] array = list.toArray();
+
+        PostResponseDto responseDto =  PostResponseDto.builder()
                 .post_id(post.getId())
                 .title(post.getTitle())
-                .content(post.getContent())
+                .content(array)
                 .like_count(post.getLike_count())
                 .temporary_state(post.isTemporary_state())
                 .state(post.isState())
@@ -50,5 +58,12 @@ public class PostService {
                 .blog_id(post.getBlog_id())
                 .build();
 
+        System.out.println(jsonArray);
+        System.out.println(responseDto);
+
+
+        return responseDto;
     }
+
+
 }
